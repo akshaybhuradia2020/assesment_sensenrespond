@@ -1,0 +1,34 @@
+version: "3.6"
+services:
+  db:
+    container_name : mongo_db
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    expose:
+      - 27017
+    networks:
+      - blogging
+    volumes:
+      - mongodb-data:/data/db
+
+  api:
+    container_name: nest_js
+    build: .
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    networks:
+      - blogging
+    depends_on:
+      - db
+
+
+networks:
+  blogging:
+    driver: bridge
+
+volumes:
+  mongodb-data: {}
