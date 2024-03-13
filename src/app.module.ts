@@ -14,7 +14,7 @@ import { APP_GUARD } from '@nestjs/core';
     UserModule,
     CommentModule,
     PostModule,
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/blogging'),
+    MongooseModule.forRoot('mongodb://db:27017/blogging'),
     ThrottlerModule.forRoot([
       {
         ttl: 60000,
