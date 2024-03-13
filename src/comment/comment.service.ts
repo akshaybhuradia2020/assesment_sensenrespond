@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {Comment} from './schemas/comment.schemas';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -11,23 +11,65 @@ export class CommentService {
   constructor(@InjectModel(Comment.name) private commentModel: Model<Comment>){}
 
   create(createCommentDto: CreateCommentDto) {
-    const createdpost = new this.commentModel(createCommentDto);
-    return createdpost.save();
+    try{
+      const createdpost = new this.commentModel(createCommentDto);
+      return createdpost.save();
+    }
+    catch(error){
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: 'ops something went wrong',
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
   }
 
   findAll(query:CommentQuery) {
-    return this.commentModel.find({}).limit(query.limit).skip(query.skip);
+    try{
+      return this.commentModel.find({}).limit(query.limit).skip(query.skip);
+    }
+    catch(error){
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: 'ops something went wrong',
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   findOne(id: string) {
-    return this.commentModel.findById(id);
+    
+    try{
+      return this.commentModel.findById(id);
+    }
+    catch(error){
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: 'ops something went wrong',
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   update(id: string, updateCommentDto: UpdateCommentDto) {
-    return this.commentModel.findByIdAndUpdate(id, updateCommentDto)
+    try{
+      return this.commentModel.findByIdAndUpdate(id, updateCommentDto)
+    }
+    catch(error){
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: 'ops something went wrong',
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   remove(commentid: string) {
-    return this.commentModel.findByIdAndDelete(commentid);
+    try{
+      return this.commentModel.findByIdAndDelete(commentid);
+    }
+    catch(error){
+      throw new HttpException({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: 'ops something went wrong',
+      }, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

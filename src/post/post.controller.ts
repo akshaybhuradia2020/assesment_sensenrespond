@@ -12,29 +12,29 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @UseGuards(AuthGuard)
-  @Post()
+  @Post('add-post')
   async create(@Body() createPostDto: CreatePostDto) {
     return this.postService.create(createPostDto);
   }
 
-  @Get()
+  @Get('get-all-post')
   async findAll(@Query() query: PostQuery) {
     return await this.postService.findAll(query);
   }
 
-  @Get(':id')
+  @Get('get-one-post/:id')
   async findOne(@Param('id') id: string) {
     return await this.postService.findOne(id);
   }
 
   @UseGuards(AuthGuard)
-  @Post(':id')
+  @Post('update-post/:id')
   async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return await this.postService.update(id, updatePostDto);
   }
 
   @UseGuards(AuthGuard)
-  @Delete(':id')
+  @Delete('delete-post/:id')
   async remove(@Param('id') id: string) {
     return await this.postService.remove(id);
   }

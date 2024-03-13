@@ -6,16 +6,24 @@ export type CommentDocument = HydratedDocument<Comment>;
 
 @Schema()
 export class Comment {
-    @Prop()
+    @Prop({
+        required:true
+    })
     content: string;
 
-    @Prop()
+    @Prop({
+        required: true
+    })
     author: string;
 
-    @Prop()
+    @Prop({
+        required: true
+    })
     timestamp: string;
 
-    @Prop()
+    @Prop({
+        required: true
+    })
     postid: string;
 }
 

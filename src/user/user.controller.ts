@@ -11,7 +11,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   
-  @Post()
+  @Post('signup')
   async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
@@ -29,13 +29,13 @@ export class UserController {
   // }
 
   @UseGuards(AuthGuard)
-  @Post(':id')
+  @Post('update-user/:id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.userService.update(id, updateUserDto);
   }
 
   @UseGuards(AuthGuard)
-  @Delete(':id')
+  @Delete('delete-user/:id')
   async remove(@Param('id') id: string) {
     return await this.userService.remove(id);
   }
